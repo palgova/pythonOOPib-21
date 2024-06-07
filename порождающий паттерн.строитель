@@ -1,0 +1,70 @@
+class Engine:
+    def __init__(self, horsepower):
+        self.horsepower = horsepower
+
+class Transmission:
+    def __init__(self, type):
+        self.type = type
+
+class Body:
+    def __init__(self, color):
+        self.color = color
+
+class CarBuilder:
+    def __init__(self):
+        self.car = None
+
+    def create_new_car(self):
+        self.car = Car()
+
+    def add_engine(self, horsepower):
+        self.car.engine = Engine(horsepower)
+
+    def add_transmission(self, type):
+        self.car.transmission = Transmission(type)
+
+    def add_body(self, color):
+        self.car.body = Body(color)
+
+    def get_car(self):
+        return self.car
+
+class CarDirector:
+    def __init__(self, builder):
+        self.builder = builder
+
+    def construct_car(self, horsepower, type, color):
+        self.builder.create_new_car()
+        self.builder.add_engine(horsepower)
+        self.builder.add_transmission(type)
+        self.builder.add_body(color)
+
+class Car:
+    def __init__(self):
+        self.engine = None
+        self.transmission = None
+        self.body = None
+
+# Concrete Builders
+class SedanBuilder(CarBuilder):
+    def add_car_type(self):
+        self.car.car_type = "Sedan"
+
+class SUVBuilder(CarBuilder):
+    def add_car_type(self):
+        self.car.car_type = "SUV"
+
+class SportsCarBuilder(CarBuilder):
+    def add_car_type(self):
+        self.car.car_type = "Sports Car"
+
+# Client code
+builder = SUVBuilder()
+director = CarDirector(builder)
+director.construct_car(300, "Automatic", "Red")
+car = builder.get_car()
+
+print(f"Car Type: {car.car_type}")
+print(f"Engine Horsepower: {car.engine.horsepower}")
+print(f"Transmission Type: {car.transmission.type}")
+print(f"Body Color: {car.body.color}")
