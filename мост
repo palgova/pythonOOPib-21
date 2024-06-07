@@ -1,0 +1,82 @@
+from abc import ABC, abstractmethod
+
+# Абстрактный класс для устройств
+class Device(ABC):
+    @abstractmethod
+    def turn_on(self):
+        pass
+
+    @abstractmethod
+    def turn_off(self):
+        pass
+
+    @abstractmethod
+    def set_state(self, state):
+        pass
+
+# Класс для телевизора
+class TV(Device):
+    def turn_on(self):
+        print("TV is turned on")
+
+    def turn_off(self):
+        print("TV is turned off")
+
+    def set_state(self, state):
+        print(f"TV state changed to {state}")
+
+# Класс для лампочки
+class Light(Device):
+    def turn_on(self):
+        print("Light is turned on")
+
+    def turn_off(self):
+        print("Light is turned off")
+
+    def set_state(self, state):
+        print(f"Light state changed to {state}")
+
+# Абстрактный класс для пульта управления
+class RemoteControl:
+    def __init__(self, device):
+        self.device = device
+
+    def turn_on(self):
+        self.device.turn_on()
+
+    def turn_off(self):
+        self.device.turn_off()
+
+    def set_state(self, state):
+        self.device.set_state(state)
+
+# Классы производителей
+class SonyTV(TV):
+    def __init__(self):
+        print("Sony TV created")
+
+class SamsungTV(TV):
+    def __init__(self):
+        print("Samsung TV created")
+
+class PhilipsLight(Light):
+    def __init__(self):
+        print("Philips Light created")
+
+class IKEALight(Light):
+    def __init__(self):
+        print("IKEA Light created")
+
+# Пример использования
+tv = SonyTV()
+light = PhilipsLight()
+
+remote_tv = RemoteControl(tv)
+remote_tv.turn_on()
+remote_tv.set_state("Channel 5")
+remote_tv.turn_off()
+
+remote_light = RemoteControl(light)
+remote_light.turn_on()
+remote_light.set_state("50% brightness")
+remote_light.turn_off()
